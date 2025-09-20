@@ -60,7 +60,7 @@ const ProcessingPage = ({ onProcessingComplete }) => {
       console.log("Calling /api/analyze-business endpoint...");
 
       const analysisResponse = await axios.post(
-        "/api/analyze-business",
+        "http://localhost:5000/api/analyze-business",
         formData,
         {
           headers: {
