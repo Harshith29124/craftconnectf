@@ -7,11 +7,12 @@ const apiClient = axios.create({
   timeout: 30000, // 30 second timeout
 });
 
-export const analyzeBusinessAudio = (audioBlob) => {
+export const analyzeBusinessAudio = (audioBlob, options = {}) => {
   const formData = new FormData();
   formData.append("audio", audioBlob, "recording.webm");
   return apiClient.post("/analyze-business", formData, {
     headers: { "Content-Type": "multipart/form-data" },
+    ...options,
   });
 };
 

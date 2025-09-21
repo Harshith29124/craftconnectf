@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { analyzeBusinessAudio } from "../services/api";
 
 const ProcessingPage = ({ onProcessingComplete }) => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -59,22 +59,15 @@ const ProcessingPage = ({ onProcessingComplete }) => {
 
       console.log("Calling /api/analyze-business endpoint...");
 
-      const analysisResponse = await axios.post(
-        "http://localhost:5001/api/analyze-business",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          timeout: 60000, // 60 second timeout for full processing
-          onUploadProgress: (progressEvent) => {
-            const uploadProgress = Math.round(
-              (progressEvent.loaded * 100) / progressEvent.total
-            );
-            setProgress(Math.min(40, 30 + uploadProgress * 0.1));
-          },
-        }
-      );
+      const analysisResponse = await analyzeBusinessAudio(audioBlob, {
+        timeout: 300000, // 5 minute timeout for full processing
+        onUploadProgress: (progressEvent) => {
+          const uploadProgress = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          setProgress(Math.min(40, 30 + uploadProgress * 0.1));
+        },
+      });
 
       console.log("API Response received:", analysisResponse.data);
 
