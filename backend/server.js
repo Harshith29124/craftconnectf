@@ -21,8 +21,11 @@ console.log("Server.js: Attempting to connect to MongoDB...");
 // Connect to MongoDB
 mongoose
   .connect(process.env.MONGODB_URI)
-  .then(() => console.log("Server.js: MongoDB Connected successfully"))
-  .catch((err) => console.error("Server.js: MongoDB connection error:", err));
+  .then(() => console.log('Server.js: MongoDB Connected successfully'))
+  .catch((err) => {
+    console.error('Server.js: MongoDB connection error:', err);
+    console.error('Server.js: MONGODB_URI used:', process.env.MONGODB_URI ? '****** (present)' : 'undefined');
+  });
 
 const app = express();
 
