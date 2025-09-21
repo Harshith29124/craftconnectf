@@ -1,34 +1,50 @@
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
-require("dotenv").config();
+const express = require('express');
+const cors = require('cors');
+const mongoose = require('mongoose');
+const { SpeechClient } = require('@google-cloud/speech');
+const { PredictionServiceClient } = require('@google-cloud/aiplatform');
 
-const apiRoutes = require("./src/routes/api");
+console.log("Server.js: Application starting up.");
 
-// --- INITIALIZATION ---
-const app = express();
-const PORT = process.env.PORT || 5001;
+const apiRoutes = require('./src/routes/api');
 
-// --- MIDDLEWARE ---
-const corsOptions = {
-  origin: process.env.CLIENT_URL, // Allow requests from your frontend URL
-  credentials: true, // Allow cookies to be sent with requests
-};
-app.use(cors(corsOptions));
-app.use(express.json());
+// Initialize Google Cloud Speech client
+const speech = new SpeechClient();
 
-// --- DATABASE CONNECTION ---
+// Initialize Vertex AI client
+const aiplatform = new PredictionServiceClient({
+  apiEndpoint: 'us-central1-aiplatform.googleapis.com',
+});
+
+// Connect to MongoDB
 mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log("✅ MongoDB connected successfully"))
-  .catch((err) => console.error("❌ MongoDB connection error:", err));
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log('MongoDB Connected'))
+  .catch((err) => console.error(err));
 
-// --- API ROUTES ---
-app.use("/api", apiRoutes);
+const app = express();
 
-// --- START SERVER ---
+// Middleware
+app.use(cors({
+  origin: process.env.CLIENT_URL,
+  credentials: true,
+}));
+console.log(`🌐 CLIENT_URL: ${process.env.CLIENT_URL}`);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Routes
+app.use('/api', apiRoutes);
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
+const PORT = process.env.PORT || 8080;
+
 app.listen(PORT, () => {
   console.log(`🚀 Backend server running on http://localhost:${PORT}`);
-  console.log(`🔧 Google Cloud Project: ${process.env.GOOGLE_PROJECT_ID}`);
-  console.log(`🌐 CLIENT_URL: ${process.env.CLIENT_URL}`);
+  console.log(`🔧 Google Cloud Project: ${process.env.GOOGLE_CLOUD_PROJECT}`);
 });
