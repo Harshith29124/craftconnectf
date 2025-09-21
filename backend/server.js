@@ -17,11 +17,12 @@ const aiplatform = new PredictionServiceClient({
   apiEndpoint: 'us-central1-aiplatform.googleapis.com',
 });
 
+console.log("Server.js: Attempting to connect to MongoDB...");
 // Connect to MongoDB
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log('MongoDB Connected'))
-  .catch((err) => console.error(err));
+  .then(() => console.log('Server.js: MongoDB Connected successfully'))
+  .catch((err) => console.error('Server.js: MongoDB connection error:', err));
 
 const app = express();
 
@@ -44,7 +45,9 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 8080;
+console.log(`Server.js: Port to listen on: ${PORT}`);
 
+console.log("Server.js: Calling app.listen...");
 app.listen(PORT, () => {
   console.log(`🚀 Backend server running on http://localhost:${PORT}`);
   console.log(`🔧 Google Cloud Project: ${process.env.GOOGLE_CLOUD_PROJECT}`);
