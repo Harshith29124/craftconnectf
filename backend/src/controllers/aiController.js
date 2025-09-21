@@ -37,6 +37,7 @@ try {
  * Transcribes audio using Google Speech-to-Text API with multiple format support.
  */
 async function transcribeAudio(audioBuffer) {
+  console.time("transcribeAudio_function"); // Start transcribe function timer
   if (!speechClient) {
     throw new Error("Speech client not initialized");
   }
@@ -51,6 +52,7 @@ async function transcribeAudio(audioBuffer) {
   for (const encoding of encodings) {
     try {
       console.log(`Trying encoding: ${encoding}`);
+      console.time(`speechClient_recognize_${encoding}`); // Start recognize timer for each encoding
       
       const audio = {
         content: audioBuffer.toString("base64"),
@@ -73,6 +75,7 @@ async function transcribeAudio(audioBuffer) {
       
       const request = { audio, config };
       const [response] = await speechClient.recognize(request);
+      console.timeEnd(`speechClient_recognize_${encoding}`); // End recognize timer
       
       if (response.results && response.results.length > 0) {
         const transcription = response.results
@@ -81,10 +84,12 @@ async function transcribeAudio(audioBuffer) {
           
         if (transcription && transcription.trim().length > 0) {
           console.log(`Success with encoding: ${encoding}`);
+          console.timeEnd("transcribeAudio_function"); // End transcribe function timer on success
           return { success: true, text: transcription };
         }
       }
     } catch (err) {
+      console.timeEnd(`speechClient_recognize_${encoding}`); // End recognize timer on error
       console.log(`Failed with encoding ${encoding}:`, err.message || err);
       lastError = err;
       continue;
@@ -92,6 +97,7 @@ async function transcribeAudio(audioBuffer) {
   }
 
   console.error("All encoding attempts failed");
+  console.timeEnd("transcribeAudio_function"); // End transcribe function timer on failure
   return {
     success: false,
     error: `Speech recognition failed. Last error: ${lastError?.message || "Unknown"}`
@@ -374,8 +380,10 @@ function ensureValidAnalysisFormat(data) {
 
 exports.analyzeBusinessAudio = async (req, res) => {
   console.log("Received request for business audio analysis.");
+  console.time("analyzeBusinessAudio_total"); // Start total timer
   if (!req.file || !req.file.buffer) {
     console.error("❌ No audio file uploaded or buffer is empty.");
+    console.timeEnd("analyzeBusinessAudio_total"); // End total timer on error
     return res.status(200).json({
       success: false,
       error: "No audio file uploaded",
@@ -399,11 +407,14 @@ exports.analyzeBusinessAudio = async (req, res) => {
     console.log("Audio file mimetype:", req.file.mimetype);
     
     // Step 1: Transcribe the audio
+    console.time("transcribeAudio_step"); // Start transcribe timer
     console.log("Attempting to transcribe audio...");
     const transcriptionResult = await transcribeAudio(req.file.buffer);
+    console.timeEnd("transcribeAudio_step"); // End transcribe timer
     
     if (!transcriptionResult.success) {
       console.error("❌ Audio transcription failed:", transcriptionResult.error);
+      console.timeEnd("analyzeBusinessAudio_total"); // End total timer on error
       return res.status(200).json({
         success: false,
         error: transcriptionResult.error || "Failed to transcribe audio",
@@ -425,12 +436,15 @@ exports.analyzeBusinessAudio = async (req, res) => {
     console.log("Transcription successful. Transcript (first 100 chars):", transcript.substring(0, 100) + "...");
     
     // Step 2: Analyze the transcript with Vertex AI
+    console.time("analyzeTranscriptWithVertexAI_step"); // Start Vertex AI timer
     console.log("Attempting to analyze transcript with Vertex AI...");
     const analysisResult = await analyzeTranscriptWithVertexAI(transcript);
+    console.timeEnd("analyzeTranscriptWithVertexAI_step"); // End Vertex AI timer
     
     // Handle case where analysis failed but we have a fallback analysis
     if (!analysisResult.success && analysisResult.fallbackAnalysis) {
       console.warn("⚠️ Vertex AI analysis failed, using fallback analysis.", analysisResult.error);
+      console.timeEnd("analyzeBusinessAudio_total"); // End total timer on error
       return res.status(200).json({
         success: true,
         partial: true,
@@ -443,16 +457,16 @@ exports.analyzeBusinessAudio = async (req, res) => {
     // Handle case where analysis failed without fallback
     if (!analysisResult.success) {
       console.error("❌ Vertex AI analysis failed without fallback:", analysisResult.error);
+      console.timeEnd("analyzeBusinessAudio_total"); // End total timer on error
       return res.status(200).json({
         success: true,
         partial: true,
         transcript: transcript,
         error: analysisResult.error || "Failed to analyze transcript",
-        // Add default analysis object to maintain consistent structure
         analysis: {
           businessType: "Craft Business",
           detectedFocus: "Handmade Products",
-          topProblems: ["Unable to analyze from transcript"],
+          topProblems: ["Vertex AI analysis failed"],
           recommendedSolutions: {
             primary: { id: "website", reason: "A basic online presence is essential" },
             secondary: { id: "instagram", reason: "Visual platform ideal for products" }
@@ -461,33 +475,22 @@ exports.analyzeBusinessAudio = async (req, res) => {
         }
       });
     }
-    
-    // Return successful result
-    console.log("✅ Business analysis completed successfully.");
+
+    console.log("Vertex AI analysis successful.");
+    console.timeEnd("analyzeBusinessAudio_total"); // End total timer on success
     return res.status(200).json({
       success: true,
       transcript: transcript,
-      analysis: analysisResult.data,
+      analysis: analysisResult.analysis,
     });
   } catch (error) {
-    console.error("❌ Critical error in business analysis pipeline:", error);
-    console.error("Error stack:", error.stack);
-    // Even in case of unexpected error, return a valid response
-    return res.status(200).json({
-      success: true,
-      partial: true,
-      error: error.message || "An unexpected error occurred",
-      transcript: req.file ? "Audio processed but analysis failed" : "",
-      analysis: {
-        businessType: "Craft Business",
-        detectedFocus: "Handmade Products",
-        topProblems: ["Analysis encountered an unexpected error"],
-        recommendedSolutions: {
-          primary: { id: "website", reason: "A basic online presence is essential" },
-          secondary: { id: "instagram", reason: "Visual platform ideal for products" }
-        },
-        confidence: 60
-      }
+    console.error("❌ Error during business audio analysis:", error);
+    console.timeEnd("analyzeBusinessAudio_total"); // End total timer on catch
+    return res.status(500).json({
+      success: false,
+      error: "Internal Server Error",
+      message: "An unexpected error occurred during audio analysis.",
+      details: error.message,
     });
   }
 };
