@@ -477,6 +477,7 @@ exports.analyzeBusinessAudio = async (req, res) => {
     }
 
     console.log("Vertex AI analysis successful.");
+    console.log("Analysis result before sending:", JSON.stringify(analysisResult.analysis, null, 2)); // Added log
     console.timeEnd("analyzeBusinessAudio_total"); // End total timer on success
     return res.status(200).json({
       success: true,
