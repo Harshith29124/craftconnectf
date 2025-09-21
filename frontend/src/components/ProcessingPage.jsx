@@ -60,7 +60,7 @@ const ProcessingPage = ({ onProcessingComplete }) => {
       console.log("Calling /api/analyze-business endpoint...");
 
       const analysisResponse = await axios.post(
-        "http://localhost:5000/api/analyze-business",
+        "http://localhost:5001/api/analyze-business",
         formData,
         {
           headers: {
@@ -98,7 +98,7 @@ const ProcessingPage = ({ onProcessingComplete }) => {
       setProgress(100);
 
       const processedData = {
-        transcription: analysisResponse.data.transcription,
+        transcription: analysisResponse.data.transcript,
         analysis: analysisResponse.data.analysis,
         confidence: analysisResponse.data.confidence || 0.85,
         processedAt: new Date().toISOString(),
@@ -112,7 +112,7 @@ const ProcessingPage = ({ onProcessingComplete }) => {
       // Wait a moment to show completion
       setTimeout(() => {
         onProcessingComplete(processedData);
-        navigate("/insights");
+        navigate("/insights", { state: processedData });
       }, 1500);
     } catch (error) {
       console.error("Processing error:", error);
