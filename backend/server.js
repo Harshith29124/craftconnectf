@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const { SpeechClient } = require('@google-cloud/speech');
 const { PredictionServiceClient } = require('@google-cloud/aiplatform');
 
+// This comment is added to force a new Cloud Run deployment.
 console.log("Server.js: Application starting up.");
 
 const apiRoutes = require('./src/routes/api');
