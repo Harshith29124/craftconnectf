@@ -10,7 +10,11 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 
 // --- MIDDLEWARE ---
-app.use(cors());
+const corsOptions = {
+  origin: process.env.CLIENT_URL, // Allow requests from your frontend URL
+  credentials: true, // Allow cookies to be sent with requests
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // --- DATABASE CONNECTION ---
