@@ -316,6 +316,7 @@ async function analyzeTranscriptWithVertexAI(transcript) {
     console.log("VALIDATING JSON STRUCTURE");
     parsed = ensureValidAnalysisFormat(parsed);
     console.log("VALIDATED JSON STRUCTURE:", JSON.stringify(parsed, null, 2));
+    console.log("Returning from analyzeTranscriptWithVertexAI with data:", JSON.stringify(parsed, null, 2)); // Added log
     
     return {
       success: true,
