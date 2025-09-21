@@ -15,7 +15,20 @@ const upload = multer({
 // Handles audio analysis (Speech-to-Text and Vertex AI)
 router.post(
   "/analyze-business",
+  (req, res, next) => {
+    console.log("Route /analyze-business hit");
+    next();
+  },
   upload.single("audio"),
+  (req, res, next) => {
+    console.log("Multer upload.single(\"audio\") middleware executed");
+    if (!req.file) {
+      console.log("Multer: No file uploaded");
+    } else {
+      console.log(`Multer: File uploaded - originalname: ${req.file.originalname}, mimetype: ${req.file.mimetype}, size: ${req.file.size} bytes`);
+    }
+    next();
+  },
   aiController.analyzeBusinessAudio
 );
 

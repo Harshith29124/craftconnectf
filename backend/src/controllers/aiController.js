@@ -379,7 +379,7 @@ function ensureValidAnalysisFormat(data) {
 // --- EXPORTED API HANDLERS ---
 
 exports.analyzeBusinessAudio = async (req, res) => {
-  console.log("Received request for business audio analysis.");
+  console.log("analyzeBusinessAudio function entered");
   console.time("analyzeBusinessAudio_total"); // Start total timer
   if (!req.file || !req.file.buffer) {
     console.error("❌ No audio file uploaded or buffer is empty.");
