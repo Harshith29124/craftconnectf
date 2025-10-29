@@ -9,6 +9,7 @@ import AnalyzeProductImagePage from "./pages/AnalyzeProductImagePage";
 import ArtisanHubPage from "./pages/ArtisanHubPage";
 import SmartProductEnhancerPage from "./pages/SmartProductEnhancerPage";
 import QuotationResultPage from "./pages/QuotationResultPage";
+import InstagramReviewPostPage from "./pages/InstagramReviewPostPage";
 import Layout from "./components/Layout";
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <Route path="/hub" element={<ArtisanHubPage />} />
           <Route path="/enhancer" element={<SmartProductEnhancerPage />} />
           <Route path="/quotation" element={<QuotationResultPage />} />
+          <Route path="/instagram-post" element={<InstagramReviewPostPage />} />
         </Routes>
       </Layout>
     </Router>
