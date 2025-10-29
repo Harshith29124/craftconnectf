@@ -6,6 +6,7 @@ import WhatsAppPage from "./pages/WhatsAppPage";
 import ComingSoonPage from "./pages/ComingSoonPage";
 import VoiceRecordingPage from "./pages/VoiceRecordingPage";
 import AnalyzeProductImagePage from "./pages/AnalyzeProductImagePage";
+import ArtisanHubPage from "./pages/ArtisanHubPage";
 import Layout from "./components/Layout";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path="/website" element={<ComingSoonPage />} />
           <Route path="/voice-recording" element={<VoiceRecordingPage />} />
           <Route path="/analyze-image" element={<AnalyzeProductImagePage />} />
+          <Route path="/hub" element={<ArtisanHubPage />} />
         </Routes>
       </Layout>
     </Router>
