@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import InsightsPage from "./pages/InsightsPage";
 import WhatsAppPage from "./pages/WhatsAppPage";
 import ComingSoonPage from "./pages/ComingSoonPage";
+import VoiceRecordingPage from "./pages/VoiceRecordingPage";
 import Layout from "./components/Layout";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/whatsapp" element={<WhatsAppPage />} />
           <Route path="/instagram" element={<ComingSoonPage />} />
           <Route path="/website" element={<ComingSoonPage />} />
+          <Route path="/voice-recording" element={<VoiceRecordingPage />} />
         </Routes>
       </Layout>
     </Router>
