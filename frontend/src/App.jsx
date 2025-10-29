@@ -11,6 +11,7 @@ import SmartProductEnhancerPage from "./pages/SmartProductEnhancerPage";
 import QuotationResultPage from "./pages/QuotationResultPage";
 import InstagramReviewPostPage from "./pages/InstagramReviewPostPage";
 import WhatsAppSendPage from "./pages/WhatsAppSendPage";
+import ShopifyLaunchPage from "./pages/ShopifyLaunchPage";
 import Layout from "./components/Layout";
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
           <Route path="/quotation" element={<QuotationResultPage />} />
           <Route path="/instagram-post" element={<InstagramReviewPostPage />} />
           <Route path="/whatsapp-send" element={<WhatsAppSendPage />} />
+          <Route path="/shopify-launch" element={<ShopifyLaunchPage />} />
         </Routes>
       </Layout>
     </Router>
