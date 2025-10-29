@@ -1,7 +1,10 @@
 import React from "react";
+import EnhancerSlider from "../components/EnhancerSlider";
 
 const SmartProductEnhancerPage = () => {
-  // Placeholder handlers for future integration
+  const originalUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuA1waSSomWEVOwpxAs0qqfNwD44WPLhYdDsoDk_3oXC9ooayu0OnwI51WoGQWhmMLXIMIcbeKPsYqK224d3L7LaDJPK_bIkcPreWGyiDpi891oFNgG171Mlhd_1aafiGaNEbRRPneaKfIcJeXjS7iozc9LQGWc7Zml6enPnOiyGAybTMFw7i5FzE8uo-1U_BY0QuoaDIGjflnt_yiGBqR0MgGWxiAAECR0jC9jWfn1v8IDzXfHcRgmb8rxnq6VwsnOsXCzPX5TsZME";
+  const enhancedUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuB8JmPRAtBs59CHIiMrX5ZmIpHuL2Anmyk48mTO_ECuf-f7oKrdOJ5AhjzE7YR1PL3YPzZkUN_RNhydIk5B5LOaNb3SQUB0u5GzH3ckebCJJ51Nvx07A7uUKFYSwysDOeBNtoB_LkIO9AePdeyeba-itMBA3MdlOH0EYGmnqtF9AqUdmz7IDbMJYlxABj4YKtWARnWcJdyKe7_cFVMsUEg46vmgsUUC2LCTR6YHLZkKFuSIx7_Y6AZ4Fgm9884YozwP4_FdzY9QRN0";
+
   const handleDownload = () => console.log("Download enhanced image");
   const handleUseForQuotation = () => console.log("Use for quotation");
   const handlePostToInstagram = () => console.log("Post to Instagram");
@@ -30,7 +33,6 @@ const SmartProductEnhancerPage = () => {
         </div>
       </header>
 
-      {/* Main */}
       <main className="w-full max-w-5xl mx-auto px-4 py-8 sm:py-12">
         <div className="flex flex-col items-center gap-8">
           <div className="text-center w-full max-w-xl">
@@ -38,27 +40,8 @@ const SmartProductEnhancerPage = () => {
             <p className="mt-2 text-[#897261] dark:text-[#a39e99]">Review your AI-enhanced image below. Drag the slider to compare.</p>
           </div>
 
-          {/* Before/After Frame */}
-          <div className="w-full relative bg-white dark:bg-[#221810]/50 rounded-xl shadow-lg overflow-hidden border border-[#f4f2f0] dark:border-[#221810]/50">
-            <div className="grid grid-cols-2 aspect-[16/9]">
-              <div className="relative">
-                <div className="absolute inset-0 bg-cover bg-center" style={{backgroundImage:"url('https://lh3.googleusercontent.com/aida-public/AB6AXuA1waSSomWEVOwpxAs0qqfNwD44WPLhYdDsoDk_3oXC9ooayu0OnwI51WoGQWhmMLXIMIcbeKPsYqK224d3L7LaDJPK_bIkcPreWGyiDpi891oFNgG171Mlhd_1aafiGaNEbRRPneaKfIcJeXjS7iozc9LQGWc7Zml6enPnOiyGAybTMFw7i5FzE8uo-1U_BY0QuoaDIGjflnt_yiGBqR0MgGWxiAAECR0jC9jWfn1v8IDzXfHcRgmb8rxnq6VwsnOsXCzPX5TsZME')"}} />
-                <div className="absolute top-4 left-4 rounded-full px-3 py-1.5 text-xs font-bold uppercase backdrop-blur-sm bg-white/70 dark:bg-[#221810]/70 text-[#333333] dark:text-[#f8f7f6]">Original</div>
-              </div>
-              <div className="relative">
-                <div className="absolute inset-0 bg-cover bg-center" style={{backgroundImage:"url('https://lh3.googleusercontent.com/aida-public/AB6AXuB8JmPRAtBs59CHIiMrX5ZmIpHuL2Anmyk48mTO_ECuf-f7oKrdOJ5AhjzE7YR1PL3YPzZkUN_RNhydIk5B5LOaNb3SQUB0u5GzH3ckebCJJ51Nvx07A7uUKFYSwysDOeBNtoB_LkIO9AePdeyeba-itMBA3MdlOH0EYGmnqtF9AqUdmz7IDbMJYlxABj4YKtWARnWcJdyKe7_cFVMsUEg46vmgsUUC2LCTR6YHLZkKFuSIx7_Y6AZ4Fgm9884YozwP4_FdzY9QRN0')"}} />
-                <div className="absolute top-4 right-4 rounded-full px-3 py-1.5 text-xs font-bold uppercase backdrop-blur-sm bg-white/70 dark:bg-[#221810]/70 text-[#333333] dark:text-[#f8f7f6]">AI Enhanced</div>
-              </div>
-            </div>
-            <div className="absolute inset-0">
-              <div className="absolute inset-y-0 left-1/2 w-px bg-white dark:bg-black mix-blend-difference" />
-              <div className="absolute inset-y-0 left-1/2 -ml-4 flex items-center justify-center">
-                <button className="size-8 rounded-full bg-white dark:bg-black shadow-md flex items-center justify-center cursor-grab active:cursor-grabbing focus:outline-none focus:ring-2 focus:ring-[#ec6d13] focus:ring-offset-2"><span className="material-symbols-outlined !text-base text-[#333333] dark:text-[#f8f7f6] rotate-90">unfold_more</span></button>
-              </div>
-            </div>
-          </div>
+          <EnhancerSlider originalUrl={originalUrl} enhancedUrl={enhancedUrl} />
 
-          {/* Actions */}
           <div className="w-full max-w-2xl pt-4 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3">
             <button onClick={handleDownload} className="h-12 w-full sm:w-auto px-5 rounded-lg bg-[#ec6d13] text-white text-base font-bold hover:scale-105 active:scale-100 transition-transform">Download Enhanced Image</button>
             <button onClick={handleUseForQuotation} className="h-12 w-full sm:w-auto px-5 rounded-lg bg-[#f4f2f0] dark:bg-[#221810]/60 text-[#333333] dark:text-[#f8f7f6] text-base font-bold hover:scale-105 active:scale-100 transition-transform">Use for Quotation</button>
