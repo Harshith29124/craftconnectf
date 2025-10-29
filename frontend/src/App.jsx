@@ -10,6 +10,7 @@ import ArtisanHubPage from "./pages/ArtisanHubPage";
 import SmartProductEnhancerPage from "./pages/SmartProductEnhancerPage";
 import QuotationResultPage from "./pages/QuotationResultPage";
 import InstagramReviewPostPage from "./pages/InstagramReviewPostPage";
+import WhatsAppSendPage from "./pages/WhatsAppSendPage";
 import Layout from "./components/Layout";
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route path="/enhancer" element={<SmartProductEnhancerPage />} />
           <Route path="/quotation" element={<QuotationResultPage />} />
           <Route path="/instagram-post" element={<InstagramReviewPostPage />} />
+          <Route path="/whatsapp-send" element={<WhatsAppSendPage />} />
         </Routes>
       </Layout>
     </Router>
