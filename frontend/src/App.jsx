@@ -7,6 +7,7 @@ import ComingSoonPage from "./pages/ComingSoonPage";
 import VoiceRecordingPage from "./pages/VoiceRecordingPage";
 import AnalyzeProductImagePage from "./pages/AnalyzeProductImagePage";
 import ArtisanHubPage from "./pages/ArtisanHubPage";
+import SmartProductEnhancerPage from "./pages/SmartProductEnhancerPage";
 import Layout from "./components/Layout";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/voice-recording" element={<VoiceRecordingPage />} />
           <Route path="/analyze-image" element={<AnalyzeProductImagePage />} />
           <Route path="/hub" element={<ArtisanHubPage />} />
+          <Route path="/enhancer" element={<SmartProductEnhancerPage />} />
         </Routes>
       </Layout>
     </Router>
