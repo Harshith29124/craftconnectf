@@ -193,7 +193,7 @@ const WhatsAppSendPage = () => {
               <button 
                 className="flex-1 h-10 px-4 rounded-xl bg-white border border-[#f4f2f0] text-[#181411] font-medium hover:bg-[#fef3e9] hover:border-[#ec6d13]/20 transition-all duration-200"
               >
-                Add Payment Link (UPI)
+                Payment Link
               </button>
             </div>
           </div>
