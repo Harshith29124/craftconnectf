@@ -12,11 +12,26 @@ import InstagramReviewPostPage from "./pages/InstagramReviewPostPage";
 import WhatsAppSendPage from "./pages/WhatsAppSendPage";
 import ShopifyLaunchPage from "./pages/ShopifyLaunchPage";
 
-// New dedicated pages for specific integrations
-import InstagramIntegrationPage from "./pages/InstagramIntegrationPage";
-import WebsiteBuilderPage from "./pages/WebsiteBuilderPage";
-
+// Import EmptyStates for placeholder pages
+import { EmptyStates } from "./components/EmptyState";
 import Layout from "./components/Layout";
+
+// Temporary placeholder components that use EmptyState
+const InstagramPage = () => (
+  <div className="min-h-screen bg-[#FFFCF9]">
+    <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+      <EmptyStates.Instagram />
+    </div>
+  </div>
+);
+
+const WebsitePage = () => (
+  <div className="min-h-screen bg-[#FFFCF9]">
+    <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+      <EmptyStates.Website />
+    </div>
+  </div>
+);
 
 function App() {
   return (
@@ -32,9 +47,9 @@ function App() {
           <Route path="/insights" element={<InsightsPage />} />
           <Route path="/whatsapp" element={<WhatsAppPage />} />
           
-          {/* Replace ComingSoon with actual functionality */}
-          <Route path="/instagram" element={<InstagramIntegrationPage />} />
-          <Route path="/website" element={<WebsiteBuilderPage />} />
+          {/* Replace ComingSoon with proper placeholders */}
+          <Route path="/instagram" element={<InstagramPage />} />
+          <Route path="/website" element={<WebsitePage />} />
           
           {/* Core workflow pages */}
           <Route path="/voice-recording" element={<VoiceRecordingPage />} />
