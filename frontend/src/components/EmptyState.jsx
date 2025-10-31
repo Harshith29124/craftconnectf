@@ -55,16 +55,16 @@ const EmptyStates = {
       )}
       title="Instagram Integration"
       description="Connect your Instagram account to publish your enhanced product photos directly to your feed and stories."
-      action=(
+      action={
         <div className="flex flex-col sm:flex-row gap-3">
           <Button variant="primary" size="lg">
             Connect Instagram
           </Button>
-          <Button variant="outline" size="lg" asChild>
+          <Button variant="outline" size="lg">
             <Link to="/">Back to Home</Link>
           </Button>
         </div>
-      )
+      }
     />
   ),
 
@@ -79,16 +79,16 @@ const EmptyStates = {
       )}
       title="Portfolio Website"
       description="Create a beautiful portfolio website to showcase your crafts and connect with customers online."
-      action=(
+      action={
         <div className="flex flex-col sm:flex-row gap-3">
           <Button variant="primary" size="lg">
             Build Website
           </Button>
-          <Button variant="outline" size="lg" asChild>
+          <Button variant="outline" size="lg">
             <Link to="/hub">View Examples</Link>
           </Button>
         </div>
-      )
+      }
     />
   ),
 
@@ -102,16 +102,16 @@ const EmptyStates = {
       )}
       title={`${feature} Coming Soon`}
       description="We're working hard to bring you this feature. In the meantime, explore what's already available."
-      action=(
+      action={
         <div className="flex flex-col sm:flex-row gap-3">
-          <Button variant="primary" size="lg" asChild>
+          <Button variant="primary" size="lg">
             <Link to="/">Explore App</Link>
           </Button>
-          <Button variant="outline" size="lg" asChild>
+          <Button variant="outline" size="lg">
             <Link to="/insights">View Insights</Link>
           </Button>
         </div>
-      )
+      }
     />
   ),
 
@@ -125,11 +125,11 @@ const EmptyStates = {
       )}
       title={title}
       description={description}
-      action=(
-        <Button variant="primary" size="lg" asChild>
+      action={
+        <Button variant="primary" size="lg">
           <Link to={actionLink}>{actionText}</Link>
         </Button>
-      )
+      }
     />
   )
 };
